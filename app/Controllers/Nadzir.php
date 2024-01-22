@@ -4,19 +4,34 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use App\Models\NadzirModel;
+use \Dompdf\Dompdf;
 
 class Nadzir extends Controller
 {
     public function index()
     {
         if(session()->has('isLoggedIn')){
-            helper('form');
             $model = new NadzirModel();
             $data['nadzir'] = $model->getNadzir();
             echo view('nadzir_view', $data);
         } else {
             return redirect()->to(base_url("login"));
         }
+    }
+
+    public function htmlToPDF(){
+        helper('url');
+        $dompdf = new Dompdf(); 
+        $model = new NadzirModel();
+        $data['nadzir'] = $model->getNadzir();
+        $html = view('nadzirpdf_view',$data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        // $dompdf->stream();
+        $dompdf->stream('datanadzir.pdf',array(
+            "Attachment" => false,
+        ));
     }
 
     public function add_new()
@@ -68,29 +83,8 @@ class Nadzir extends Controller
     public function delete($id)
     {
         $model = new NadzirModel();
-        $data['nadzir'] = $model->getNadzir($id)->getRow();
         $model->deleteNadzir($id);
         return redirect()->to(base_url("nadzir"));
     }
 
-    public function Search()
-    {
-        function console_log($output, $with_script_tags = true) {
-            $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . 
-        ');';
-            if ($with_script_tags) {
-                $js_code = '<script>' . $js_code . '</script>';
-            }
-            echo $js_code;
-        }
-
-        helper('form');
-        $model = new TanahModel();
-        // $data['tanah'] = $model->getTanah();
-        // echo view('tanah_view', $data);
-        $keyword = $this->request->getPost('keyword');
-        $data['nadzir']= $model->getKeyword($keyword);
-        console_log($data);
-        echo view('nadzir_view', $data);
-    }
 }

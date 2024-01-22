@@ -76,8 +76,9 @@
 
     th{
         border:2px solid black;
-        padding: 10px;
     }
+
+
 
     nav ul ul ul{
      position: absolute;
@@ -86,7 +87,7 @@
     }
 		tr, td{ 
   		border: 2px solid black;
-		padding: 20px;
+		padding: 8px;
 		color : black;
         text-align:center;
 
@@ -109,35 +110,16 @@
         .new{
             background-color: #3498db;
             color: white;
-            padding: 12px;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            border:solid black 5px;
-        }
-        .new1{
-            background-color: #3498db;
-            color: white;
             padding: 20px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
-            border:1px solid black;
-        }
-        .new2{
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            border:solid black 5px;
         }
         .navbar{
             margin:auto;
             text-align: center;
             width: 100%;
-            padding-left:408px
+            padding-left:30px
         }
         .search{
             display: block;
@@ -163,62 +145,58 @@
         padding: 10px 20px;
         border-radius: 5px;
         text-decoration: none;
-        margin-left:116px;
+        margin-left:275px;
+        }
+
+        @page {
+            margin-left:100px !important;
+        }
+        h1{
+            text-align:center;
+            margin-right:120px;
         }
 
     </style>
 <body>
-<br />
-    <input type="button" class ="print-button" value="Print PDF" onclick="window.open('<?php echo site_url('PolygonKecamatan/htmlToPDF')?>','blank')"/>
-    <br />
+    <br/>
+    <?php 
+    $pdf = false;
+    if(strpos(current_url(), "htmlToPDF")){
+        $pdf = true;
+    }
+    if($pdf == false){
+    ?>
+        <br />
+        <input type="button" class ="print-button" value="Print PDF" onclick="window.open('<?php echo site_url('nadzir/htmlToPDF')?>','blank')"/>
+        <br />
+    <?php } ?>
+    <h1> Data Nadzir Wakaf YNWPS</h1>
     <center><table>
         <thead>
             <tr>
-                <th>No</th>
-                <th>Nama Kecamatan</th>
-                <th>Luas Kecamatan </th>
-                <th>Akumulasi Luas Tanah Wakaf (m²) </th>
-                <th>Akumulasi Jumlah Penggarap </th>
-                <th>Akumulasi Jumlah Tanah Wakaf </th>
-                <th>Action</th>
-                <th>Advanced</th>
+                <th>Nomor</th>
+                <th>Nama</th>
+                <th>Jabatan</th>
+                <th>Tupoksi</th>
+                <th>Alamat</th>
+                <th>Surat Keterangan</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($polygonkecamatan as $row) : ?>
+            <?php foreach ($nadzir as $row) : ?>
                 <tr>
-                    <td><?= $row['id_polygonkecamatan']; ?></td>
+                    <td><?= $row['NadzirWakaf']; ?></td>
                     <td><?= $row['nama']; ?></td>
-                    <td><?= $row['luas']; ?></td>
-                    <td><?= $row['akumulasiluastanah']; ?></td>
-                    <td><?= $row['akumulasijumlahpenggarap']; ?></td>
-                    <td><?= $row['jumlahtanahwakaf']; ?></td>
-                    <td>
-                        <a href=<?= base_url("polygonkecamatan/edit/{$row['id_polygonkecamatan']}"); ?> class ="new">
-                            Edit Data
-                        </a>
-                        <a href=<?= base_url("polygonkecamatan/delete/{$row['id_polygonkecamatan']}"); ?> class ="new">
-                            Delete Data
-                        </a>
-                    </td>
-                    <td>
-                        <a href=<?= base_url("polygonkecamatan/formpolygonedit/{$row['id_polygonkecamatan']}")?> class ="new">
-                            Edit Polygon
-                        </a>
-                        <a href=<?= base_url("polygonkecamatan/viewpolygon/{$row['id_polygonkecamatan']}")?> class ="new">
-                            View Polygon
-                        </a>
-                    </td>
+                    <td><?= $row['jabatan']; ?></td>
+                    <td><?= $row['tupoksi']; ?></td>
+                    <td><?= $row['alamat']; ?></td>
+                    <td><?= $row['sk']; ?></td>
+                    <td><?= $row['status']; ?></td>
                 </tr>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
         </tbody>
     </table>
-    <a href=<?= base_url("polygonkecamatan/add_new"); ?> class="new2">
-        Entry Data </a><br><br>
-    </a>
-    <a href=<?= base_url("PolygonKecamatan/analisisLuas"); ?> class="new2">
-        Pemetaan Tanah Wakaf </a><br><br>
-    </a>
 </body>
 
 </html>

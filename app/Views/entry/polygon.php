@@ -67,6 +67,7 @@
         <div><label>Luas Kecamatan :</label><input type="text" name="luas" class="form-control"></div>
         <div><label>Akumulasi Luas Tanah :</label><input type="text" name="akumulasiluastanah" class="form-control"></div>
         <div><label>Akumulasi Jumlah Penggarap :</label><input type="text" name="akumulasijumlahpenggarap" class="form-control"></div>
+        <div><label>Akumulasi Jumlah Tanah :</label><input type="text" name="jumlahtanahwakaf" class="form-control"></div>
         <input type="hidden" name="polygon" class="form-control" >
         <button type="submit">Save</button>
         </div>

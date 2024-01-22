@@ -59,6 +59,7 @@ label,h3{
         <div><label>Luas Kecamatan</label><input type="text" name="luas" class="form-control"></div>
         <div><label>Akumulasi Luas Tanah Wakaf</label><input type="text" name="akumulasiluastanah" class="form-control"></div>
         <div><label>Akumulasi Jumlah Penggarap</label><input type="text" name="akumulasijumlahpenggarap" class="form-control"></div>
+        <div><label>Jumlah Tanah Wakaf</label><input type="text" name="jumlahtanahwakaf" class="form-control"></div>
         <div><label>Titik Polygon : </label><input type="text" name="polygon" class="form-control"></div>
         <button type="submit">Save</button>
         </div>

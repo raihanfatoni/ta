@@ -3,13 +3,11 @@
 
 <head>
     <meta charset="utf-8">    
-    <meta name="viewport" content="wNoth=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
-
     <title>Data Tanah Wakaf</title>
 </head>
 <style>
@@ -78,11 +76,8 @@
 
     th{
         border:2px solid black;
+        padding: 10px;
     }
-
-
-
-
 
     nav ul ul ul{
      position: absolute;
@@ -91,7 +86,7 @@
     }
 		tr, td{ 
   		border: 2px solid black;
-		padding: 8px;
+		padding: 20px;
 		color : black;
         text-align:center;
 
@@ -101,7 +96,6 @@
             background: white;
             border-radius: 8px;
             box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
-            margin-right:5px;
         }
         input, textarea, {
          background: none;
@@ -112,16 +106,6 @@
          color: black;
          border-radius: 24px;
         }
-        .new1{
-            background-color: #3498db;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            border:solid black 5px;
-        }
-
         .new{
             background-color: #3498db;
             color: white;
@@ -131,20 +115,20 @@
             display: block;
             border:solid black 5px;
         }
-
-        .new2{
+        .new1{
             background-color: #3498db;
             color: white;
-            padding: 12px;
+            padding: 20px;
             text-align: center;
             text-decoration: none;
-            display: block;
-            border:solid black 5px;
+            display: inline-block;
+            border:1px solid black;
         }
         .navbar{
+            margin:auto;
             text-align: center;
             width: 100%;
-            padding-left:225px
+            padding-left:408px
         }
         .search{
             display: block;
@@ -163,7 +147,7 @@
             border-radius: 0.25rem;
             transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
         }
-        
+
         .print-button {
         background-color: #007bff;
         color: #fff;
@@ -173,76 +157,53 @@
         margin-left:575px;
         }
 
+        @page {
+            margin-left:70px !important;
+        }
+        h1{
+            text-align:center;
+            margin-right:120px;
+        }
+
     </style>
 <body>
-    <div class="navbar">
-        <?php echo form_open('Wakaf/Search') ?>
-        <div class = "row">
-                <div class="col-sm-8">
-                    <input type="text" name="keyword" class="search" placeholder="Search">
-                </div>
-                <div class="col-sm-2">
-                    <button type="submit" class="btn btn-success">Search</button>
-                </div>
-                <div class="col-sm-2">
-                <input type="button" class ="print-button" value="Print PDF" onclick="window.open('<?php echo site_url('wakaf/htmlToPDF')?>','blank')"/>
-                </div>
-        </div>
-        <?php echo form_close() ?>
-    </div>
+<br/>
+    <?php 
+    $pdf = false;
+    if(strpos(current_url(), "htmlToPDF")){
+        $pdf = true;
+    }
+    if($pdf == false){
+    ?>
+        <br />
+        <input type="button" class ="print-button" value="Print PDF" onclick="window.open('<?php echo site_url('polygonkecamatan/htmlToPDF')?>','blank')"/>
+        <br />
+    <?php } ?>
+    <h1> Data Kecamatan </h1>
     <center><table>
         <thead>
             <tr>
                 <th>No</th>
-                <th>Wilayah</th>
-                <th>Tipe Tanah</th>
-                <th>Mandor</th>
-                <th>Jumlah Penggarap</th>
-                <th>Luas Tanah</th>
-                <th>Setoran Panen</th>
-                <th>Marker</th>
-                <th>Action</th>
-                <th>Advanced</th>
+                <th>Nama Kecamatan</th>
+                <th>Luas Kecamatan </th>
+                <th>Akumulasi Luas Tanah (m²) </th>
+                <th>Akumulasi Penggarap </th>
+                <th>Akumulasi Jumlah Tanah  </th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($wakaf as $row) : ?>
+            <?php foreach ($polygonkecamatan as $row) : ?>
                 <tr>
-                    <td><?= $row['no']; ?></td>
-                    <td><?= $row['wilayah']; ?></td>
-                    <td><?= $row['tipe']; ?></td>
-                    <td><?= $row['mandor']; ?></td>
-                    <td><?= $row['jumlahpenggarap']; ?></td>
+                    <td><?= $row['id_polygonkecamatan']; ?></td>
+                    <td><?= $row['nama']; ?></td>
                     <td><?= $row['luas']; ?></td>
-                    <td><?= $row['setoranpanen']; ?></td>
-                    <td><?= $row['marker']; ?></td>
-                    <td>
-                        <a href=<?= base_url("wakaf/edit/{$row['no']}"); ?> class ="new1">
-                            Edit Data
-                        </a>
-                        <a href=<?= base_url("wakaf/delete/{$row['no']}"); ?> class ="new1">
-                            Delete Data
-                        </a>
-                    </td>
-                    <td>
-                        <a href=<?= base_url("wakaf/formmarkeredit/{$row['no']}")?> class ="new1">
-                            Edit Marker
-                        </a>
-                        <a href=<?= base_url("wakaf/viewmarker/{$row['no']}")?> class ="new1">
-                            View Marker
-                        </a>    
-                    </td>
+                    <td><?= $row['akumulasiluastanah']; ?></td>
+                    <td><?= $row['akumulasijumlahpenggarap']; ?></td>
+                    <td><?= $row['jumlahtanahwakaf']; ?></td>
                 </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    <a href=<?= base_url("wakaf/add_new"); ?> class="new">
-        Entry Data </a><br><br>
-    </a>
-    <a href=<?= base_url("PolygonKecamatan/analisisLuas"); ?> class="new2">
-        Pemetaan Tanah Wakaf </a><br><br>
-    </a>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </body>
-
 
 </html>

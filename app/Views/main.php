@@ -1,3 +1,18 @@
+<?php
+    $dropdownStruktur = [
+        'name'=> 'strukturorg',
+        'options'=> $struktur,
+        'class'=> 'form-control'
+    ];
+
+    $submit = [
+        'name'=>'submit',
+        'id'=>'submit',
+        'value'=>'Pilih Data',
+        'class'=>'btn btn-primary',
+        'type'=>'submit'
+    ];
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -30,7 +45,7 @@
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href=<?= base_url("tanah/polygonsumedang"); ?>>Pemetaan Tanah Wakaf</a>
+              <a class="nav-link" href=<?= base_url("PolygonKecamatan/analisisLuas"); ?>>Pemetaan Tanah Wakaf</a>
             </li>
             <li class="nav-item">
               <a class="nav-link btn" href="login">Login</a>
@@ -48,7 +63,7 @@
           <div class="col-6 contain">
             <h3>Sistem Informasi Geografis Berbasis Web untuk Digitalisasi Peninggalan Tanah Wakaf Pangeran Sumedang</h3>
             <P>Kerajaan ini didirikan pada tahun 721 M oleh Prabu Tajimalela, keturunan dari raja Wretikandayun dari Kerajaan Galuh, di wilayah bekas dari Kerajaan Tembong Agung. Kerajaan ini juga pernah dikenal dengan nama Kerajaan Himbar Buana sebelum berganti nama menjadi Sumedang Larang.Sumedang Larang berstatus sebagai bagian dari Kerajaan Sunda dan Galuh antara abad ke-8 sampai abad ke-16 M, dimana penguasanya berada di bawah penguasa kedua kerajaan tersebut.Ibu kota Sumedang Larang di saat pendiriannya berada di Citembong Girang, yang saat ini masuk dalam wilayah desa Cikeusi, Kec. Darmaraja, Kab. Sumedang.</P>
-            <button class="btn">Cari Data Tanah Wakaf</button>
+            <button class="nav-link btn" onclick="window.location.href='<?= base_url("PolygonKecamatan/analisisLuas"); ?>'">Cari Data Tanah Wakaf</button>
           </div>
           <div class="col-5 offset-1">
             <img src="../image/LogoKSLkecil.png" alt="">
@@ -67,103 +82,89 @@
         <div class="col">
           <div class="Header">
             <h2>Yayasan Nazhir Wakaf Pangeran Sumedang </h2>
-            <span class="divider-one"></span>
-            <span class="divider-two"></span>
-            <span class="divider-three"></span>
           </div>
-          <p class="body">Sistem informasi yang dibuat dilengkapi dengan fitur - fitur ditujukan untuk membantu para pengelola tanah wakaf Yayasan Pangeran Sumedang. Informasi yang disediakan berupa persebaran tanah wakaf pada 3 kecamatan yaitu Sumedang Utara, Sumedang Selatan dan Conggeang</p>
+          <p class="body">Sistem informasi yang dibuat dilengkapi dengan fitur - fitur ditujukan untuk membantu para pengelola tanah wakaf Yayasan Pangeran Sumedang. Informasi yang disediakan berupa persebaran tanah wakaf pada 6 kecamatan yaitu Tanjungkerta, Sumedang Utara, Sumedang Selatan, Darmaraja, Buahdua dan Conggeang. Di bawah ini merupakan jumlah tanah wakaf yang berada pada masing - masing kecamatan :</p>
           <!-- <span class="square">Sebaran Tanah Wakaf</span> -->
           <div class="Card shadow-sm">
             <div class="contain one">
-              <h3>8</h3>
-              <p>Sumedang Utara</p>
+              <div class ="row">
+                <div class = "col d-flex justify-content-between"> 
+                  <p>Tanjungkerta</p>
+                  <p>Sumedang Utara</p>
+                  <p>Darmaraja</p>
+                </div>
+              </div>
+              <div class ="row">
+                <div class = "col d-flex justify-content-between"> 
+                  <h3 class = "col-4 pe-5">1</h3>
+                  <h3 class = "col-4 ps-3 ms-2 ">2</h3>
+                  <h3 class = "col-4 ps-5 ">1</h3>
+                </div>
+              </div>
             </div>
-            <div class="contain two">
-              <h3>21</h3>
-              <p>Sumedang Selatan</p>
-            </div>
-            <div class="contain three">
-              <h3>2</h3>
-              <p>Conggeang</p>
-            </div>
+        </div>
+            <div class="Card shadow-sm">
+              <div class="contain one">
+                <div class ="row">
+                  <div class = "col d-flex justify-content-between"> 
+                    <p>Conggeang</p>
+                    <p>Sumedang Selatan</p>
+                    <p>Buahdua</p>
+                  </div>
+                </div>
+                <div class ="row">
+                  <div class = "col d-flex justify-content-between"> 
+                    <h3 class = "col-4 pe-5">1</h3>
+                    <h3 class = "col-4 ps-3 ms-2 ">11</h3>
+                    <h3 class = "col-4 ps-5 ">1</h3>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
-      </div>
     </section>
     <!-- End About -->
 
     <!-- Service -->
-    <!-- <section class="container" id="Service">
+    <section class="container" id="Service">
+      <?= form_open('/') ?>
+                <div class="row mt-3 mb-3">
+                    <div class="col-md-10">
+                        <b> Pilih Informasi Struktur </b>
+                        <?= form_dropdown($dropdownStruktur) ?>
+                    </div>
+                    <div class="col-md-2 pt-4">
+                        <?= form_submit($submit) ?>
+                    </div>
+                </div>
+            <?= form_close() ?>
       <div class="Header">
-        <h2>Lorem Ipsum</h2>
       </div>
       <div class="row">
-        <div class="col">
-          <div class="Card shadow-sm">
-            <h3 class="text-center">Lorem Ipsum</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In placerat euismod eros at sagittis. Mauris tincidunt dolor sed urna euismod pharetra.</p>
-            <button class="btn container-fluid">Explore Now</button>
-          </div>
-        </div>
-        <div class="col">
-          <div class="Card shadow-sm">
-            <h3 class="text-center">Lorem Ipsum</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In placerat euismod eros at sagittis. Mauris tincidunt dolor sed urna euismod pharetra.</p>
-            <button class="btn container-fluid">Explore Now</button>
-          </div>
-        </div>
-        <div class="col">
-          <div class="Card shadow-sm">
-            <h3 class="text-center">Lorem Ipsum</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In placerat euismod eros at sagittis. Mauris tincidunt dolor sed urna euismod pharetra.</p>
-            <button class="btn container-fluid">Explore Now</button>
-          </div>
-        </div>
+        <?php 
+        if($pilihStruktur == 1 ){
+          foreach ($nadzir as $row=>$value) : ?>
+              <div class="col-sm-4">
+                  <div class="Card shadow-sm">
+                      <h3 class="text-center"><?= $value['tupoksi']?></h3>
+                      <img src="<?= $value['img'] ?>" >
+                      <p> Keanggotaan beliau tercantum pada surat keterangan nomor <?= $value['sk']?>. Secara keturunan beliau <?= $value['status']?> terhadap leluhur Kerajaan Sumedang Larang. Beliau bertempat tinggal di <?= $value['alamat']?>.</p>
+                      <button class="btn container-fluid"><?= $value['nama']?></button>
+                      <button class="btn container-fluid"><?= $value['jabatan']?></button>
+
+                  </div>
+              </div>
+          <?php endforeach;
+        } else {
+          echo '<div class = "w-100 text-center">
+            <img class = "bagan" src="../image/struktur.drawio.png" alt="Description of image">
+          </div>';
+        }
+        ?>
       </div>     
-    </section> -->
+    </section>  
     <!-- End Service -->
 
-    <!-- Feedback -->
-    <!-- <section class="container" id="Feedback">
-      <div class="Feedback Header">
-        <h2>Customer Feedback</h2>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="Card shadow-sm">
-            <p>“Lorem ipsum dolor sit amet, consectetur adipiscing elit. In placerat euismod eros at sagittis. Mauris tincidunt dolor sed urna euismod pharetra.”</p>
-            <div class="biodata">
-              <img src="../image/Feedback1.png" alt="">
-              <div class="contain">
-                <h4>John Doe</h4>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-         <div class="Card shadow-sm">
-          <p>“Lorem ipsum dolor sit amet, consectetur adipiscing elit. In placerat euismod eros at sagittis. Mauris tincidunt dolor sed urna euismod pharetra.”</p>
-          <div class="biodata">
-            <img src="../image/Feedback2.png" alt="" class="avatar">
-            <div class="contain">
-              <h4>Arthur Dennis</h4>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star-fill"></i>
-              <i class="bi bi-star"></i>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-    </section> -->
-    <!-- End Feedback -->
     
     <!-- Footer -->
     <footer class="jumbotron-fluid" id="Footer">
@@ -183,13 +184,13 @@
               <h4>Analisis Sebaran Tanah Wakaf</h4>
               <ul>
                 <li>
-                  <a href="<?= site_url('Tanah/polygonsumedang')?>">Analisis Jumlah Tanah Wakaf</a>
+                  <a href="<?= site_url('PolygonKecamatan/analisisLuas')?>">Analisis Luas Tanah</a>
                 </li>
                 <li>
-                  <a href="<?= site_url('PolygonKecamatan/polygonsumedang')?>">Analisis Luas</a>
+                  <a href="<?= site_url('PolygonKecamatan/analisisjumlahTanah')?>">Analisis Jumlah Tanah</a>
                 </li>
                 <li>
-                  <a href="">Analisis Jumlah Penggarap</a>
+                  <a href="<?= site_url('PolygonKecamatan/analisisPenggarap')?>">Analisis Jumlah Penggarap</a>
                 </li>
               </ul>
             </div>

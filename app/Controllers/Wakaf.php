@@ -5,19 +5,44 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use App\Models\WakafModel;
 use App\Models\PolygonKecamatanModel;
+use \Dompdf\Dompdf;
 
 class Wakaf extends Controller
 {
     public function index()
     {
+        function console_log($output, $with_script_tags = true) {
+            $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . 
+        ');';
+            if ($with_script_tags) {
+                $js_code = '<script>' . $js_code . '</script>';
+            }
+            echo $js_code;
+        }
         if(session()->has('isLoggedIn')){
             helper('form');
             $model = new WakafModel();
             $data['wakaf'] = $model->getWakaf();
+            console_log($data);
             echo view('wakaf_view', $data);
         } else {
             return redirect()->to(base_url("login"));
         }
+    }
+
+    public function htmlToPDF(){
+        helper('url');
+        $dompdf = new Dompdf(); 
+        $model = new WakafModel();
+        $data['wakaf'] = $model->getWakaf();
+        $html = view('wakafpdf_view',$data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        // $dompdf->stream();
+        $dompdf->stream('datanadzir.pdf',array(
+            "Attachment" => false,
+        ));
     }
 
     public function add_new()
@@ -31,6 +56,7 @@ class Wakaf extends Controller
         $data = array(
             'no'  => $this->request->getPost('no'),
             'wilayah' => $this->request->getPost('wilayah'),
+            'tipe'  => $this->request->getPost('tipe'),
             'mandor' => $this->request->getPost('mandor'),
             'jumlahpenggarap' => $this->request->getPost('jumlahpenggarap'),
             'luas' => $this->request->getPost('luas'),
@@ -57,6 +83,7 @@ class Wakaf extends Controller
         $data = array(
             'no'  => $this->request->getPost('no'),
             'wilayah' => $this->request->getPost('wilayah'),
+            'tipe'  => $this->request->getPost('tipe'),
             'mandor' => $this->request->getPost('mandor'),
             'jumlahpenggarap' => $this->request->getPost('jumlahpenggarap'),
             'luas' => $this->request->getPost('luas'),
@@ -89,7 +116,7 @@ class Wakaf extends Controller
         }
 
         helper('form');
-        $model = new TanahModel();
+        $model = new WakafModel();
         // $data['tanah'] = $model->getTanah();
         // echo view('tanah_view', $data);
         $keyword = $this->request->getPost('keyword');
@@ -108,54 +135,61 @@ class Wakaf extends Controller
             }
             echo $js_code;
         }
-        $model = new WakafModel();
-        $wakaf = $model->getWakaf();
-        helper('form');
-    
-        $fileName = "http://localhost/tugasakhir/public/maps/polygonsumedang.geojson";
-        $file = file_get_contents($fileName);
-        $file = json_decode($file);
-        $features = $file->features;
-        console_log($features);
-    
-        foreach($wakaf as $index=>$value)
-        {
-            if($value['marker'] != NULL){
-                $markertanah[] = json_decode($value['marker']);
-                $no[] = json_decode($value['no']);
-                $wilayah[] = $value['wilayah'];
-                $mandor[] = $value['mandor'];
-                $jumlahpenggarap[] = json_decode($value['jumlahpenggarap']);
-                $luas[] = json_decode($value['luas']);
-                $setoranpanen[] = json_decode($value['setoranpanen']);
-                $googleearth[] = $value['googleearth'];
-            } 
-        }
-        foreach($markertanah as $row=>$val){
-            $marker[$row] = [$val->lat, $val->lng];
-            $data = NULL;
-            $data['type'] = "Feature";
-            $data['geometry'] = [
-                "type" => "Marker",
-                "coordinates" => $marker[$row]
-            ];
-            $data['properties'] = [
-                "no"=> $no[$row],
-                "wilayah"=> $wilayah[$row],
-                "mandor"=> $mandor[$row],
-                "jumlahpenggarap"=>$jumlahpenggarap[$row],
-                "luas"=> $luas[$row],
-                "setoranpanen"=> $setoranpanen[$row],
-                "googleearth"=> $googleearth[$row],
-            ];
-            $response[]=$data;
-        }
-        console_log($response);
-        return view('entry/marker',[
-            'data'=> $features,
-            'marker'=>$response,
 
-        ]);
+        if(session()->has('isLoggedIn')){
+            $model = new WakafModel();
+            $wakaf = $model->getWakaf();
+            helper('form');
+        
+            $fileName = "http://localhost/tugasakhir/public/maps/polygonsumedang.geojson";
+            $file = file_get_contents($fileName);
+            $file = json_decode($file);
+            $features = $file->features;
+            console_log($features);
+        
+            foreach($wakaf as $index=>$value)
+            {
+                if($value['marker'] != NULL){
+                    $markertanah[] = json_decode($value['marker']);
+                    $no[] = json_decode($value['no']);
+                    $wilayah[] = $value['wilayah'];
+                    $tipe[] = $value['tipe'];
+                    $mandor[] = $value['mandor'];
+                    $jumlahpenggarap[] = json_decode($value['jumlahpenggarap']);
+                    $luas[] = json_decode($value['luas']);
+                    $setoranpanen[] = json_decode($value['setoranpanen']);
+                    $googleearth[] = $value['googleearth'];
+                } 
+            }
+            foreach($markertanah as $row=>$val){
+                $marker[$row] = [$val->lat, $val->lng];
+                $data = NULL;
+                $data['type'] = "Feature";
+                $data['geometry'] = [
+                    "type" => "Marker",
+                    "coordinates" => $marker[$row]
+                ];
+                $data['properties'] = [
+                    "no"=> $no[$row],
+                    "wilayah"=> $wilayah[$row],
+                    "tipe"=> $tipe[$row],
+                    "mandor"=> $mandor[$row],
+                    "jumlahpenggarap"=>$jumlahpenggarap[$row],
+                    "luas"=> $luas[$row],
+                    "setoranpanen"=> $setoranpanen[$row],
+                    "googleearth"=> $googleearth[$row],
+                ];
+                $response[]=$data;
+            }
+            console_log($response);
+            return view('entry/marker',[
+                'data'=> $features,
+                'marker'=>$response,
+    
+            ]);
+        } else {
+            return redirect()->to(base_url("login"));
+        }
     }
 
     public function formmarkeredit($id){
@@ -272,6 +306,7 @@ class Wakaf extends Controller
                         $markertanah[] = json_decode($value['marker']);  // json_decode disini digunakan untuk mengubah value dari variabel
                         $no[] = json_decode($value['no']);               // menjadi objek
                         $wilayah[] = $value['wilayah'];
+                        $tipe[] = $value['tipe'];
                         $mandor[] = $value['mandor'];
                         $jumlahpenggarap[] = json_decode($value['jumlahpenggarap']);
                         $luas[] = json_decode($value['luas']);
@@ -291,6 +326,7 @@ class Wakaf extends Controller
                     $data['properties'] = [
                         "no"=> $no[$row],
                         "wilayah"=> $wilayah[$row],
+                        "tipe"=> $tipe[$row],
                         "mandor"=> $mandor[$row],
                         "jumlahpenggarap"=>$jumlahpenggarap[$row],
                         "luas"=> $luas[$row],
@@ -300,24 +336,6 @@ class Wakaf extends Controller
                     ];
                     $response[]=$data;
                 }
-
-                // foreach($response as $index=>$feature){
-                //     $NadzirWakaf = $feature['properties']['NadzirWakaf'];
-                //     console_log($NadzirWakaf);
-                //     $data = $modelNadzir->where('NadzirWakaf', $NadzirWakaf)
-                //             ->first();
-                //     if($data)
-                //     {
-                //         $response[$index]['properties']['nadzir'] = $data['nama'];
-                //         $response[$index]['properties']['jabatan'] = $data['jabatan'];
-                //         $response[$index]['properties']['tupoksi'] = $data['tupoksi'];
-                //         $response[$index]['properties']['alamat'] = $data['alamat'];
-                //         $response[$index]['properties']['sk'] = $data['sk'];
-                //         $response[$index]['properties']['statusNadzir'] = $data['status'];
-    
-                //     }
-                    
-                // }
 
                 foreach($polygonkecamatan as $index=>$value)
                 {
@@ -349,18 +367,6 @@ class Wakaf extends Controller
                     }
                     $response1[]=$data;   
                 }
-
-                // foreach($response1 as $index=>$feature){
-                //     $no = $feature['properties']['No'];
-                //     console_log($no);
-                //     $data = $modelKecamatan->where('id_kecamatan', $no)
-                //             ->first();
-                //     if($data)
-                //     {
-                //         $response1[$index]['properties']['luas'] = $data['luas'];
-                //         $response1[$index]['properties']['jumlahtanahwakaf'] = $data['jumlahtanah'];
-                //     }  
-                // }
 
                 return view('polygon/penggarap',[
                     'data'=> $features,
@@ -383,6 +389,7 @@ class Wakaf extends Controller
                         $markertanah[] = json_decode($value['marker']);  // json_decode disini digunakan untuk mengubah value dari variabel
                         $no[] = json_decode($value['no']);               // menjadi objek
                         $wilayah[] = $value['wilayah'];
+                        $tipe[] = $value['tipe'];
                         $mandor[] = $value['mandor'];
                         $jumlahpenggarap[] = json_decode($value['jumlahpenggarap']);
                         $luas[] = json_decode($value['luas']);
@@ -402,6 +409,7 @@ class Wakaf extends Controller
                     $data['properties'] = [
                         "no"=> $no[$row],
                         "wilayah"=> $wilayah[$row],
+                        "tipe"=> $tipe[$row],
                         "mandor"=> $mandor[$row],
                         "jumlahpenggarap"=>$jumlahpenggarap[$row],
                         "luas"=> $luas[$row],
@@ -411,24 +419,6 @@ class Wakaf extends Controller
                     ];
                     $response[]=$data;
                 }
-
-                // foreach($response as $index=>$feature){
-                //     $NadzirWakaf = $feature['properties']['NadzirWakaf'];
-                //     console_log($NadzirWakaf);
-                //     $data = $modelNadzir->where('NadzirWakaf', $NadzirWakaf)
-                //             ->first();
-                //     if($data)
-                //     {
-                //         $response[$index]['properties']['nadzir'] = $data['nama'];
-                //         $response[$index]['properties']['jabatan'] = $data['jabatan'];
-                //         $response[$index]['properties']['tupoksi'] = $data['tupoksi'];
-                //         $response[$index]['properties']['alamat'] = $data['alamat'];
-                //         $response[$index]['properties']['sk'] = $data['sk'];
-                //         $response[$index]['properties']['statusNadzir'] = $data['status'];
-    
-                //     }
-                    
-                // }
 
                 foreach($polygonkecamatan as $index=>$value)
                 {
@@ -461,18 +451,6 @@ class Wakaf extends Controller
                     $response1[]=$data;   
                 }
 
-                // foreach($response1 as $index=>$feature){
-                //     $no = $feature['properties']['No'];
-                //     console_log($no);
-                //     $data = $modelKecamatan->where('id_kecamatan', $no)
-                //             ->first();
-                //     if($data)
-                //     {
-                //         $response1[$index]['properties']['luas'] = $data['luas'];
-                //         $response1[$index]['properties']['jumlahtanahwakaf'] = $data['jumlahtanah'];
-                //     }  
-                // }
-
                 return view('polygon/penggarap',[
                     'data'=> $features,
                     'data1'=> $response1,
@@ -488,6 +466,7 @@ class Wakaf extends Controller
                         $markertanah[] = json_decode($value['marker']);  // json_decode disini digunakan untuk mengubah value dari variabel
                         $no[] = json_decode($value['no']);               // menjadi objek
                         $wilayah[] = $value['wilayah'];
+                        $tipe[] = $value['tipe'];
                         $mandor[] = $value['mandor'];
                         $jumlahpenggarap[] = json_decode($value['jumlahpenggarap']);
                         $luas[] = json_decode($value['luas']);
@@ -507,6 +486,7 @@ class Wakaf extends Controller
                     $data['properties'] = [
                         "no"=> $no[$row],
                         "wilayah"=> $wilayah[$row],
+                        "tipe"=> $tipe[$row],
                         "mandor"=> $mandor[$row],
                         "jumlahpenggarap"=>$jumlahpenggarap[$row],
                         "luas"=> $luas[$row],
@@ -559,8 +539,8 @@ class Wakaf extends Controller
 
     }
 
-    public function viewmarker($id){
 
+    public function viewmarker($id){
         function console_log($output, $with_script_tags = true) {
             $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . 
         ');';
@@ -581,6 +561,7 @@ class Wakaf extends Controller
         $setoranpanen = $wakaf->setoranpanen;
         $setoranpanen = json_decode($setoranpanen);
         $wilayah = $wakaf->wilayah;
+        $tipe = $wakaf->tipe;
         $mandor = $wakaf->mandor;
         $no = $wakaf->no;
         $no = json_decode($no);
@@ -620,6 +601,7 @@ class Wakaf extends Controller
         // console_log($file);
 		$features = $file->features;
         console_log($features);
+        console_log($tipe);
 
         return view('entry/viewmarker',[
         'markertanah'=>$markertanah,
@@ -627,6 +609,7 @@ class Wakaf extends Controller
         'luas'=>$luas,
         'setoranpanen'=>$setoranpanen,
         'wilayah'=>$wilayah,
+        'tipe'=>$tipe,
         'mandor'=>$mandor,
         'googleearth'=>$googleearth,
         'no'=>$no,

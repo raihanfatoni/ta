@@ -33,11 +33,13 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index');
 $routes->get('logout', 'Login::logout');
 $routes->match(['get', 'post'], 'register', 'Login::register');
-$routes->get('dashboard', 'Tanah::Index', ['filter' => 'auth']);
+$routes->get('dashboard', 'PolygonKecamatan::analisisLuas', ['filter' => 'auth']);
 $routes->get('/homepage', 'Home::Index');
 $routes->get('/viewtanah', 'Tanah::Index');
 $routes->get('/mapsview', 'Home::Maps');
 $routes->get('/kecamatanview', 'Kecamatan::Index');
+$routes->get('Nadzir/htmlToPDF', 'Nadzir::htmlToPDF');
+
 
 
 /**

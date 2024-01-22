@@ -56,6 +56,7 @@
         <h3>Form Entry Data Tanah</h3>
         <div><label>Nomor Tanah Wakaf : </label><input type="text" name="no" class="form-control"></div>
         <div><label>Lokasi Tanah</label><input type="text" name="wilayah" class="form-control"></div>
+        <div><label>Tipe Tanah</label><input type="text" name="tipe" class="form-control"></div>
         <div><label>Mandor Wakaf</label><input type="text" name="mandor" class="form-control"></div>
         <div><label>Jumlah Penggarap : </label><input type="text" name="jumlahpenggarap" class="form-control"></div>
         <div><label>Luas Tanah: </label><input type="text" name="luas" class="form-control"></div>

@@ -25,10 +25,10 @@
   -->
       <div class="logo">
         <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-          CT
+          Sistem Informasi Geografis
         </a>
         <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+          YNWPS
         </a>
       </div>
       
@@ -36,32 +36,28 @@
         <ul class="nav">
           <!-- your sidebar here -->
           <li class="nav-item active">
-            <a class="nav-link" href="<?= site_url('Tanah/polygonsumedang')?>">
-              <i class="material-icons">maps</i>
-              <p>Analisis Jumlah Tanah</p>
-            </a>
-          </li>
-          <li class ="nav-item">
-            <a class="nav-link" href="">
-              <i class="material-icons">south</i>
-              <p>DALAM PENGEMBANGAN</p>
-            </a>
-            <a class="nav-link" href="<?= site_url('PolygonKecamatan/polygonsumedang')?>">
+            <a class="nav-link" href="<?= site_url('PolygonKecamatan/analisisLuas')?>">
               <i class="material-icons">maps</i>
               <p>Analisis Luas Tanah </p>
             </a>
-            <a class="nav-link" href="<?= site_url('Wakaf/polygonsumedang')?>">
+          </li>
+          <li class ="nav-item">
+            <a class="nav-link" href="<?= site_url('PolygonKecamatan/analisisjumlahTanah')?>">
+              <i class="material-icons">maps</i>
+              <p>Analisis Jumlah Tanah </p>
+            </a>
+            <a class="nav-link" href="<?= site_url('PolygonKecamatan/analisisPenggarap')?>">
               <i class="material-icons">maps</i>
               <p>Analisis Jumlah Penggarap </p>
             </a>
-            <a class="nav-link" href="<?= site_url('Wakaf/formmarker')?>">
+            <!-- <a class="nav-link" href="<?= site_url('Wakaf/formmarker')?>">
               <i class="material-icons">maps</i>
               <p>Create Marker</p>
             </a>
             <a class="nav-link" href="<?= site_url('PolygonKecamatan/formpolygon')?>">
               <i class="material-icons">maps</i>
               <p>Create Polygon</p>
-            </a>
+            </a> -->
           </li>
           <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" >
@@ -69,15 +65,18 @@
                 <p>Admin Action</p>
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                <li><a class="dropdown-item" href="<?= site_url('Tanah/formpolygon')?>"><i class="material-icons">hexagon</i>Form Polygon</a></li>
-                <li><a class="dropdown-item" href="<?= site_url('Tanah/formmarker')?>"><i class="material-icons">location_on</i>Form Marker</a></li>
-                <!-- <li><a class="dropdown-item" href="<?= site_url('Tanah/polygontanahwakaf')?>">Polygon Kecamatan</a></li> -->
-                <li><a class="dropdown-item" href="<?= site_url('Tanah/index')?>"><i class="material-icons">terrain</i>Data Tanah Wakaf</a></li>
-                <li><a class="dropdown-item" href="<?= site_url('Kecamatan/index')?>"><i class="material-icons">location_city</i>Data Kecamatan</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('PolygonKecamatan/formpolygon')?>"><i class="material-icons">hexagon</i>Form Polygon</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('Wakaf/formmarker')?>"><i class="material-icons">location_on</i>Form Marker</a></li>
                 <li><a class="dropdown-item" href="<?= site_url('Nadzir/index')?>"><i class="material-icons">manage_account</i>Data Nadzir</a></li>
-                <li><a class="dropdown-item" href=""><i class="material-icons">south</i>DALAM PENGEMBANGAN</a></li>
-                <li><a class="dropdown-item" href="<?= site_url('Wakaf/index')?>"><i class="material-icons">manage_account</i>Data Wakaf</a></li>
-                <li><a class="dropdown-item" href="<?= site_url('PolygonKecamatan/index')?>"><i class="material-icons">manage_account</i>Data Polygon</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('Wakaf/index')?>"><i class="material-icons">terrain</i>Data Wakaf</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('PolygonKecamatan/index')?>"><i class="material-icons">location_city</i>Data Kecamatan</a></li>
+                <li><a class="dropdown-item" href=<?= base_url("/register") ?>><i class="material-icons">manage_accounts</i>Tambah Admin</a></li>
+                <li><a class="dropdown-item" href=<?= base_url("login/logout"); ?>><i class="material-icons">logout</i>Logout</a></li>
+                <!-- <li><a class="dropdown-item" href="<?= site_url('Tanah/formpolygon')?>"><i class="material-icons">hexagon</i>Form Polygon</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('Tanah/formmarker')?>"><i class="material-icons">location_on</i>Form Marker</a></li> -->
+                <!-- <li><a class="dropdown-item" href="<?= site_url('Tanah/polygontanahwakaf')?>">Polygon Kecamatan</a></li> -->
+                <!-- <li><a class="dropdown-item" href="<?= site_url('Tanah/index')?>"><i class="material-icons">terrain</i>Data Tanah Wakaf</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('Kecamatan/index')?>"><i class="material-icons">location_city</i>Data Kecamatan</a></li> -->
                 <!-- <li><a class="dropdown-item" href="<?= site_url('Tanah/index')?>">Data Tanah Wakaf</a></li> -->
                 
               </ul>

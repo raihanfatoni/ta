@@ -11,12 +11,11 @@ class WakafModel extends Model
     public function getKeyword($keyword){
         helper('form');
         $this->select('*')
-        ->like('Lokasi', $keyword)
-        ->orLike('Tipe',$keyword)
-        ->orLike('No',$keyword)
-        ->orLike('KoordinatLokasi',$keyword)
-        ->orLike('NadzirWakaf',$keyword)
-        ->orLike('polygon',$keyword)
+        ->like('wilayah', $keyword)
+        ->orLike('tipe',$keyword)
+        ->orLike('mandor',$keyword)
+        ->orLike('jumlahpenggarap',$keyword)
+        ->orLike('luas',$keyword)
         ->orLike('marker',$keyword)
         ->orLike('googleearth',$keyword);
         return $this->findAll();
@@ -30,16 +29,6 @@ class WakafModel extends Model
             return $this->getWhere(['no' => $id]);
         }
     }
-
-    public function getPolygon($id = false)
-    {
-        if ($id === false) {
-            return $this->findAll();
-        } else {
-            return $this->getWhere(['no' => $id]);
-        }
-    }
-
 
     public function saveWakaf($data)
     {

@@ -11,6 +11,12 @@
         'class'=> 'form-control'
     ];
 
+    $dropdownTipe = [
+        'name'=> 'tipe',
+        'options'=> $tipeTanah,
+        'class'=> 'form-control'
+    ];
+
     $submit = [
         'name'=>'submit',
         'id'=>'submit',
@@ -124,7 +130,7 @@
 <div class="row">
     <div class="card">
         <div class="card-body">
-            <?= form_open('Wakaf/polygonsumedang') ?>
+            <?= form_open('PolygonKecamatan/analisisPenggarap') ?>
                 <div class="row mt-3 mb-3">
                     <div class="col-md-10">
                         <b> Pilih Nama Tanah Wakaf </b>
@@ -135,7 +141,7 @@
                     </div>
                 </div>
             <?= form_close() ?>
-            <?= form_open('Wakaf/polygonsumedang') ?>
+            <?= form_open('PolygonKecamatan/analisisPenggarap') ?>
                 <div class="row mt-3 mb-3">
                     <div class="col-md-10">
                         <b> Pilih Kecamatan Tanah Wakaf </b>
@@ -146,9 +152,21 @@
                     </div>
                 </div>
             <?= form_close() ?>
+            <?= form_open('PolygonKecamatan/analisisPenggarap') ?>
+                <div class="row mt-3 mb-3">
+                    <div class="col-md-10">
+                        <b> Pilih Tipe Tanah Wakaf </b>
+                        <?= form_dropdown($dropdownTipe) ?>
+                    </div>
+                    <div class="col-md-2 pt-3 ">
+                        <?= form_submit($submit) ?>
+                    </div>
+                </div>
+            <?= form_close() ?>
         </div>
     </div>
 </div>
+
 <div id="maps"></div>
 <br>
 <textarea class="textarea" name="polygon"></textarea>
@@ -162,9 +180,9 @@
     var nilaiMax = <?= $nilaiMax ?>;
 
     function getColor(d) {
-		return d > 154.3783471 ? '#996633' :
-           d > 18.62165294 ? '#ffff66' :
-                                    ' #66ff66';
+		return d > 106 ? '#66ff33' :
+           d > 34 ? '#ffff00' :
+                                    '#ff0000';
         console.log('jml',d);
     }
 
@@ -230,9 +248,8 @@
         <ul class="list-group list-group-flush">
             
             <li class="list-group-item p-0 pl-1">Lokasi Tanah        : ${properties[i].wilayah} (${properties[i].no})</li>
+            <li class="list-group-item p-0 pl-1">Tipe Tanah         : ${properties[i].tipe}</li>
             <li class="list-group-item p-0 pl-1">Mandor Tanah         : ${properties[i].mandor}</li>
-            <li class="list-group-item p-0 pl-1">Jumlah Penggarap   : ${properties[i].jumlahpenggarap} Orang </li>
-            <li class="list-group-item p-0 pl-1">Setoran Panen         : ${properties[i].setoranpanen} </li>
             <li class="list-group-item p-0 pl-1">Luas Tanah    : ${properties[i].luas} m²</li>
         </ul>
         <div class="card-body p-0 pl-1 ">
@@ -329,8 +346,8 @@
     // method that we will use to update the control based on feature properties passed
     info.update = function (props) {
             this._div.innerHTML = '<h4>Sistem Informasi Geografis Tanah Wakaf YNWPS</h4>' +  (props ?
-            '<b> Kecamatan \t: ' + props.nama + '</b><br/>' + '<a> Akumulasi Jumlah Penggarap \t:' + props.akumulasijumlahpenggarap + ' Orang </a><br/>' 
-            + '<a> Luas Kecamatan : ' + props.luas + ' ha </a>'    
+            '<b> Kecamatan \t: ' + props.nama + '</b><br/>' + '<a> Luas Kecamatan \t:' + props.luaskecamatan + ' m² </a><br/>' 
+            + '<a> Akumulasi Jumlah Penggarap : ' + props.akumulasijumlahpenggarap + ' Orang </a><br/>' + '<a> Luas/Penggarap : ' + props.luaspenggarap + ' m²/Penggarap </a><br/>' 
             : 'Hover over a state');
     };
 
@@ -341,14 +358,15 @@
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [0, 18.62165294, 154.3783471],
+            grades = [0, 34 , 106],
             labels = [];
+            div.innerHTML = '<b>INTERVAL NILAI KLASIFIKASI POLYGON</b> <br>';
 
         // loop through our density intervals and generate a label with a colored square for each interval
         for (var i = 0; i < grades.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                grades[i] + (grades[i + 1]  ? '&ndash;' + grades[i + 1] + '<a> Orang </a>' + '<br>' : '+ Orang ');
         }
 
         return div;

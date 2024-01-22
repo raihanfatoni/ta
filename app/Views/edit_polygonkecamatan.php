@@ -58,6 +58,7 @@
         <div><label>Luas Kecamatan</label><input type="text" value= <?= $polygonkecamatan->luas?>  name="luas" class="form-control"></div>
         <div><label>Akumulasi Luas Tanah Wakaf</label><input type="text" value= <?= $polygonkecamatan->akumulasiluastanah?>  name="akumulasiluastanah" class="form-control"></div>
         <div><label>Akumulasi Jumlah Penggarap</label><input type="text" value= <?= $polygonkecamatan->akumulasijumlahpenggarap?>  name="akumulasijumlahpenggarap" class="form-control"></div>
+        <div><label>Jumlah Tanah Wakaf</label><input type="text" value= <?= $polygonkecamatan->jumlahtanahwakaf?>  name="jumlahtanahwakaf" class="form-control"></div>
         <div><label>Titik Polygon : </label><input type="text" value= <?= $polygonkecamatan->polygon?>  name="polygon" class="form-control"></div>
         <button type="submit">Update</button>
         </div>

@@ -50,6 +50,7 @@
         <input type="hidden" name="no" value="<?= $wakaf->no; ?>">
         <div><label>Input Manual Titik Marker: </label><input type="text" value= <?= $wakaf->marker?> name="marker" class="form-control"></div>
         <input type="hidden" name="wilayah" value="<?= $wakaf->wilayah; ?>">
+        <input type="hidden" name="tipe" value="<?= $wakaf->tipe; ?>">
         <input type="hidden" name="mandor" value="<?= $wakaf->mandor; ?>">
         <input type="hidden" name="jumlahpenggarap" value="<?= $wakaf->jumlahpenggarap; ?>">
         <input type="hidden" name="luas" value="<?= $wakaf->luas; ?>">

@@ -152,6 +152,7 @@
             width: 100%;
             padding: 0.375rem 0.75rem;
             font-size: 1rem;
+            /* margin-left: 62px; */
             font-weight: 400;
             line-height: 1.5;
             color: #212529;
@@ -164,17 +165,20 @@
             border-radius: 0.25rem;
             transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
         }
+        .btn btn-success{
+
+        }
 
     </style>
 <body>
     <div class="navbar">
         <?php echo form_open('Tanah/Search') ?>
-        <div class = "row">
-                <div class="col-sm-8">
+        <div class = "row ms-4">
+                <div class="col-sm-8 ms-2">
                     <input type="text" name="keyword" class="search" placeholder="Search">
                 </div>
                 <div class="col-sm-4">
-                    <button type="submit" class="btn btn-success">Search</button>
+                    <button type="submit" class="btn btn-success ms-2">Search</button>
                 </div>
         </div>
         <?php echo form_close() ?>
@@ -249,7 +253,7 @@
     <a href=<?= base_url("homepage"); ?> class="new2">
         Menu Admin </a><br><br>
     </a>
-    <a href=logout class="new2">
+    <a href=<?= base_url("login/logout"); ?>  class="new2">
         Logout </a><br><br>
     </a>
 </body>

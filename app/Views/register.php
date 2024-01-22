@@ -33,9 +33,6 @@
             <li class="nav-item">
               <a class="nav-link" href=<?= base_url("polygonkecamatan/analisisLuas"); ?> >Pemetaan Tanah Wakaf</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link btn" href="login">Login</a>
-            </li>
           </ul>
         </div>
       </div>
@@ -49,22 +46,26 @@
       </div>
       <div class="left">
         <div class="header">
-          <h2>Welcome Back</h2>
-          <h4>Log in to your account using email and password</h4>
+          <h2>Hallo Admin</h2>
+          <h4>Daftarkan admin baru dengan mengisi form di bawah ini</h4>
       </div>
       <?php if (session()->get('success')) : ?>
             <div class="alert alert-success" role="alert">
                 <?= session()->get('success'); ?>
             </div>
     <?php endif; ?>
-      <form class="form"action="/login" method="post">
+      <form class="form"action="/login/register" method="post">
           <div class="form-item">
               <label for="InputEmail"><p>Email</p></label><br>
-              <input type="text" name="email" id="email" class="form-field animation a3"  placeholder="Enter a Valid Email Address" value="">
+              <input type="text" name="email" id="email" class="form-field animation a3"  placeholder="Masukan Email Anda" value="<?= set_value('email'); ?>">
           </div>
           <div class="form-item">
-              <label for="InputPassword"><p>Password</p></label><br>
-              <input type="password" class="form-field animation a4" placeholder="Enter Password" name="password" id="password" value=""><br>
+              <label for="InputPassword"><p>Kata Sandi</p></label><br>
+              <input type="password" class="form-field animation a4" placeholder="Masukan Kata Sandi Anda" name="password" id="password" value=""><br>
+          </div>
+          <div class="form-item">
+              <label for="InputPassword"><p>Konfirmasi Kata Sandi</p></label><br>
+              <input type="password" class="form-field animation a4" placeholder="Konfirmasi Ulang Kata Sandi" name="password_confirm" id="password_confirm" value=""><br>
           </div>
           <?php if (isset($validation)) : ?>
                 <div class="col-12">
@@ -74,7 +75,8 @@
             </div>
             <?php endif; ?>
           <div class="button">
-            <button type="submit" class="btn active">Login</button><br>
+            <button type="submit" class="btn active">Register</button><br>
+            <a class="btn passive" href=<?= base_url("dashboard") ?>>Pemetaan Tanah Wakaf</a>
           </div>
       </form>
       </div>

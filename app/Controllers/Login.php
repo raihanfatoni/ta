@@ -28,23 +28,9 @@ class Login extends BaseController
             } else {
                 $model = new AdminModel();
                 $admin = $model->where('email', $this->request->getVar('email'))->first();
-                if (isset($_POST['remember'])) {
-                    //set cookie selama 5 menit
-                    setcookie('remember', 'true', time() + 300);
-                }
-
                 $this->setAdminSession($admin);
                 return redirect()->to(base_url("dashboard"));
             }
-        }
-        if (isset($_COOKIE['remember'])) {
-            if (get_cookie('remember') == 'true') {
-                session()->set('isLoggedIn', true);
-            }
-        }
-        
-        if (session()->has('isLoggedIn')) {
-            return redirect()->to(base_url("dashboard"));
         }
         return view('login', $data);
     }
@@ -60,29 +46,33 @@ class Login extends BaseController
     }
     public function register()
     {
-        $data = [];
-        helper(['form']);
-        if ($this->request->getMethod() == 'post') {
-            $rules = [
-                'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[admin.email]',
-                'password' => 'required|min_length[8]|max_length[255]',
-                'password_confirm' => 'matches[password]',
-            ];
-            if (!$this->validate($rules)) {
-                $data['validation'] = $this->validator;
-            } else {
-                $model = new AdminModel();
-                $newData = [
-                    'email' => $this->request->getVar('email'),
-                    'password' => $this->request->getVar('password'),
+        if(session()->has('isLoggedIn')){
+            $data = [];
+            helper(['form']);
+            if ($this->request->getMethod() == 'post') {
+                $rules = [
+                    'email' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[admin.email]',
+                    'password' => 'required|min_length[8]|max_length[255]',
+                    'password_confirm' => 'matches[password]',
                 ];
-                $model->save($newData);
-                $session = session();
-                $session->setFlashdata('success', 'Successful Registration');
-                return redirect()->to(base_url("/"));
+                if (!$this->validate($rules)) {
+                    $data['validation'] = $this->validator;
+                } else {
+                    $model = new AdminModel();
+                    $newData = [
+                        'email' => $this->request->getVar('email'),
+                        'password' => $this->request->getVar('password'),
+                    ];
+                    $model->save($newData);
+                    $session = session();
+                    $session->setFlashdata('success', 'Admin Baru Berhasil Ditambahkan');
+                    // return redirect()->to(base_url("dashboard"));
+                }
             }
+            return view('register', $data);
+        } else {
+            return redirect()->to(base_url("login"));
         }
-        return view('register', $data);
     }
     public function logout()
     {

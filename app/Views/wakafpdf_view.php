@@ -163,35 +163,33 @@
             border-radius: 0.25rem;
             transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
         }
-        
-        .print-button {
-        background-color: #007bff;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-        margin-left:575px;
+
+        @page {
+            margin-left:30px !important;
+        }
+        h1{
+            text-align:center;
+            margin-right:120px;
         }
 
     </style>
 <body>
-    <div class="navbar">
-        <?php echo form_open('Wakaf/Search') ?>
-        <div class = "row">
-                <div class="col-sm-8">
-                    <input type="text" name="keyword" class="search" placeholder="Search">
-                </div>
-                <div class="col-sm-2">
-                    <button type="submit" class="btn btn-success">Search</button>
-                </div>
-                <div class="col-sm-2">
-                <input type="button" class ="print-button" value="Print PDF" onclick="window.open('<?php echo site_url('wakaf/htmlToPDF')?>','blank')"/>
-                </div>
-        </div>
-        <?php echo form_close() ?>
-    </div>
+<br/>
+    <?php 
+    $pdf = false;
+    if(strpos(current_url(), "htmlToPDF")){
+        $pdf = true;
+    }
+    if($pdf == false){
+    ?>
+        <br />
+        <input type="button" class ="print-button" value="Print PDF" onclick="window.open('<?php echo site_url('nadzir/htmlToPDF')?>','blank')"/>
+        <br />
+    <?php } ?>
+    <h1> Data Tanah Wakaf </h1>
     <center><table>
         <thead>
+
             <tr>
                 <th>No</th>
                 <th>Wilayah</th>
@@ -201,8 +199,6 @@
                 <th>Luas Tanah</th>
                 <th>Setoran Panen</th>
                 <th>Marker</th>
-                <th>Action</th>
-                <th>Advanced</th>
             </tr>
         </thead>
         <tbody>
@@ -216,32 +212,10 @@
                     <td><?= $row['luas']; ?></td>
                     <td><?= $row['setoranpanen']; ?></td>
                     <td><?= $row['marker']; ?></td>
-                    <td>
-                        <a href=<?= base_url("wakaf/edit/{$row['no']}"); ?> class ="new1">
-                            Edit Data
-                        </a>
-                        <a href=<?= base_url("wakaf/delete/{$row['no']}"); ?> class ="new1">
-                            Delete Data
-                        </a>
-                    </td>
-                    <td>
-                        <a href=<?= base_url("wakaf/formmarkeredit/{$row['no']}")?> class ="new1">
-                            Edit Marker
-                        </a>
-                        <a href=<?= base_url("wakaf/viewmarker/{$row['no']}")?> class ="new1">
-                            View Marker
-                        </a>    
-                    </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
-    <a href=<?= base_url("wakaf/add_new"); ?> class="new">
-        Entry Data </a><br><br>
-    </a>
-    <a href=<?= base_url("PolygonKecamatan/analisisLuas"); ?> class="new2">
-        Pemetaan Tanah Wakaf </a><br><br>
-    </a>
 </body>
 
 

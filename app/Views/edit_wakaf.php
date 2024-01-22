@@ -55,6 +55,7 @@
         <h3>Form Entry Data Tanah</h3>
         <input type="hidden" name="no" value="<?= $wakaf->no; ?>">
         <div><label>Lokasi Tanah</label><input type="text" value= <?= $wakaf->wilayah?>  name="wilayah" class="form-control"></div>
+        <div><label>Tipe Tanah</label><input type="text" value= <?= $wakaf->tipe?>  name="tipe" class="form-control"></div>
         <div><label>Mandor Wakaf</label><input type="text" value= <?= $wakaf->mandor?>  name="mandor" class="form-control"></div>
         <div><label>Jumlah Penggarap </label><input type="text" value= <?= $wakaf->jumlahpenggarap?>  name="jumlahpenggarap" class="form-control"></div>
         <div><label>Luas Tanah</label><input type="text" value= <?= $wakaf->luas?>  name="luas" class="form-control"></div>

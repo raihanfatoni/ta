@@ -53,6 +53,7 @@
         <input type="hidden" name="luas" value="<?= $polygonkecamatan->luas; ?>">
         <input type="hidden" name="akumulasiluastanah" value="<?= $polygonkecamatan->akumulasiluastanah; ?>">
         <input type="hidden" name="akumulasijumlahpenggarap" value="<?= $polygonkecamatan->akumulasijumlahpenggarap; ?>">
+        <input type="hidden" name="jumlahtanahwakaf" value="<?= $polygonkecamatan->jumlahtanahwakaf; ?>">
         <textarea class="textarea" name="polygon" placeholder =<?= $polygonkecamatan->polygon?> ></textarea>
         <br>
         <button type="submit">Update</button>
@@ -90,8 +91,6 @@
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
-    // L.marker({lat : -6.85861, lon : 107.91639}).bindPopup('This is Sumedang').addTo(map);
-
     var drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);
     if($("[name=polygon]").val() != ""){

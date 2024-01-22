@@ -17,16 +17,6 @@ class NadzirModel extends Model
         }
     }
 
-    public function getPolygon($id = false)
-    {
-        if ($id === false) {
-            return $this->findAll();
-        } else {
-            return $this->getWhere(['NadzirWakaf' => $id]);
-        }
-    }
-
-
     public function saveNadzir($data)
     {
         $query = $this->db->table($this->table)->insert($data);

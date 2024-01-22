@@ -42,6 +42,42 @@
         #maps{
             height: 500px;
         }
+        #mainDropdown {
+        position: relative;
+        display: inline-block;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        background: white;
+        margin-bottom:10px;
+        border: 3px solid #888;
+        padding-left: 5px;
+        padding-right: px;
+        display:inline-block;
+        font: 18px/20px Arial, Helvetica, sans-serif;
+        padding: 6px 8px;
+        background-color:#FF9C36;
+        color: #FAFAFA;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+        }
+        .mainDropdown {
+        position: relative;
+        display: inline-block;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        background: white;
+        margin-bottom:10px;
+        border: 3px solid #888;
+        padding-left: 5px;
+        padding-right: px;
+        display:inline-block;
+        font: 18px/20px Arial, Helvetica, sans-serif;
+        padding: 6px 8px;
+        background-color:#FF9C36;
+        color: #FAFAFA;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+        }
         .info {
             padding: 6px 8px;
             font: 14px/16px Arial, Helvetica, sans-serif;
@@ -49,6 +85,7 @@
             background: rgba(255,255,255,0.8);
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border-radius: 5px;
+            
         }
         .info h4 {
             margin: 0 0 5px;
@@ -127,21 +164,29 @@
   </div>
 </div>
 
-<div class="row">
-    <div class="card">
-        <div class="card-body">
-            <?= form_open('PolygonKecamatan/analisisLuas') ?>
-                <div class="row mt-3 mb-3">
-                    <div class="col-md-10">
-                        <b> Pilih Nama Tanah Wakaf </b>
-                        <?= form_dropdown($dropdownTanah) ?>
-                    </div>
-                    <div class="col-md-2 pt-3">
-                        <?= form_submit($submit) ?>
-                    </div>
-                </div>
-            <?= form_close() ?>
-            <?= form_open('PolygonKecamatan/analisisLuas') ?>
+<select id="mainDropdown" class = "dropdown">
+ <option value="">Pilih Opsi Sorting</option>
+ <option value="tanah">Sort Berdasarkan Wilayah</option>
+ <option value="kecamatan">Sort Berdasarkan Kecamatan</option>
+ <option value="tipe">Sort Berdasarkan Fungsi</option>
+</select>
+
+<div id="tanahDropdown" style="display: none;" >
+    <?= form_open('PolygonKecamatan/analisisjumlahTanah') ?>
+        <div class="row mt-3 mb-3">
+            <div class="col-md-10">
+                <b> Pilih Wilayah Tanah Wakaf </b>
+                <?= form_dropdown($dropdownTanah) ?>
+            </div>
+            <div class="col-md-2 pt-3">
+                <?= form_submit($submit) ?>
+            </div>
+        </div>
+    <?= form_close() ?>
+</div>
+
+<div id="kecamatanDropdown" style="display: none;">
+<?= form_open('PolygonKecamatan/analisisjumlahTanah') ?>
                 <div class="row mt-3 mb-3">
                     <div class="col-md-10">
                         <b> Pilih Kecamatan Tanah Wakaf </b>
@@ -152,10 +197,13 @@
                     </div>
                 </div>
             <?= form_close() ?>
-            <?= form_open('PolygonKecamatan/analisisLuas') ?>
+</div>
+
+<div id="tipeDropdown" style="display: none;">
+<?= form_open('PolygonKecamatan/analisisjumlahTanah') ?>
                 <div class="row mt-3 mb-3">
                     <div class="col-md-10">
-                        <b> Pilih Tipe Tanah Wakaf </b>
+                        <b> Pilih Fungsi Tanah Wakaf </b>
                         <?= form_dropdown($dropdownTipe) ?>
                     </div>
                     <div class="col-md-2 pt-3 ">
@@ -163,8 +211,6 @@
                     </div>
                 </div>
             <?= form_close() ?>
-        </div>
-    </div>
 </div>
 
 <div id="maps"></div>
@@ -174,14 +220,23 @@
 
 <?= $this->section('script')?>
 <script>
+document.getElementById('mainDropdown').addEventListener('change', function() {
+    // Hide all dropdowns
+    document.getElementById('tanahDropdown').style.display = 'none';
+    document.getElementById('kecamatanDropdown').style.display = 'none';
+    document.getElementById('tipeDropdown').style.display = 'none';
+    // Show the selected dropdown
+    document.getElementById(this.value + 'Dropdown').style.display = 'block';
+});
+
 
     var data = <?= json_encode($data) ?>;
     var data1 = <?= json_encode($data1) ?>; 
     var nilaiMax = <?= $nilaiMax ?>;
 
     function getColor(d) {
-		return d > 411477 ? '#66ff33' :
-           d > 41348 ? '#ffff00' :
+		return d > 4 ? '#66ff33' :
+           d > 1 ? '#ffff00' :
                                     '#ff0000';
         console.log('jml',d);
     }
@@ -193,7 +248,7 @@
             color : 'white',
             dashArray : '3',
             fillOpacity : 0.7,
-            fillColor : getColor(parseInt(feature.properties.akumulasiluastanah))
+            fillColor : getColor(parseInt(feature.properties.jumlahtanahwakaf))
         };
     }
 
@@ -347,7 +402,7 @@
     info.update = function (props) {
             this._div.innerHTML = '<h4>Sistem Informasi Geografis Tanah Wakaf YNWPS</h4>' +  (props ?
             '<b> Kecamatan \t: ' + props.nama + '</b><br/>' + '<a> Luas Kecamatan \t:' + props.luaskecamatan + ' m² </a><br/>' 
-            + '<a> Akumulasi Luas Tanah Wakaf : ' + props.akumulasiluastanah + ' m² </a><br/>'   
+            +'<a> Jumlah Tanah Wakaf : ' + props.jumlahtanahwakaf + ' Tanah </a>'     
             : 'Hover over a state');
     };
 
@@ -358,7 +413,7 @@
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [0, 41348 , 411477],
+            grades = [0, 1 , 4],
             labels = [];
             div.innerHTML = '<b>INTERVAL NILAI KLASIFIKASI POLYGON</b> <br>';
 
@@ -366,7 +421,7 @@
         for (var i = 0; i < grades.length; i++) {
             div.innerHTML +=
                 '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-                grades[i] + (grades[i + 1]  ? '&ndash;' + grades[i + 1] + '<a> m² </a>' + '<br>' : '+ m²');
+                grades[i] + (grades[i + 1]  ? '&ndash;' + grades[i + 1] + '<a> Tanah Wakaf</a>' + '<br>' : '+ Tanah Wakaf');
         }
 
         return div;

@@ -84,6 +84,7 @@
         var jumlahpenggarap = <?= json_encode($jumlahpenggarap) ?>;
         var luas = <?= json_encode($luas) ?>;
         var wilayah = <?= json_encode($wilayah) ?>;
+        var tipe = <?= json_encode($tipe) ?>;
         var setoranpanen = <?= json_encode($setoranpanen) ?>;
         var mandor = <?= json_encode($mandor) ?>;
         var no = <?= json_encode($no) ?>;
@@ -96,6 +97,7 @@
         <ul class="list-group list-group-flush">
             
             <li class="list-group-item p-0 pl-1">Lokasi Tanah        : ${wilayah} (${no})</li>
+            <li class="list-group-item p-0 pl-1">Lokasi Tanah        : ${tipe}</li>
             <li class="list-group-item p-0 pl-1">Mandor Tanah         : ${mandor}</li>
             <li class="list-group-item p-0 pl-1">Jumlah Penggarap/Penyewa   : ${jumlahpenggarap} Orang </li>
             <li class="list-group-item p-0 pl-1">Setoran Panen         : ${setoranpanen} </li>

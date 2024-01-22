@@ -231,8 +231,9 @@ span {
 }
 
 #About img {
-  width: 400px;
-  height: 327px;
+  margin-top: 20px;
+  width: 500px;
+  height: 490px;
 }
 
 #About .Card {
@@ -294,13 +295,18 @@ span {
   margin-bottom: 80px;
 }
 
+#Service img {
+  width: 335px;
+  height: 270px;
+}
+
 #Service .Header h2 {
   color: #444;
   margin-bottom: 40px;
 }
 
 #Service p {
-  color: #7D7373;
+  color: #c73c3c;
 }
 
 #Service .Card {
@@ -318,6 +324,13 @@ span {
   padding: 4px 16px;
   background-color: #FF9C36;
   color: #FAFAFA;
+}
+
+#Service .bagan {
+  margin-left: auto;
+  margin-right: auto;
+  width: 809px;
+  height: 481px;
 }
 
 #Feedback {

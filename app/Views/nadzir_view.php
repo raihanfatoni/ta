@@ -80,8 +80,6 @@
 
 
 
-
-
     nav ul ul ul{
      position: absolute;
      left: 100%;
@@ -116,6 +114,16 @@
             text-align: center;
             text-decoration: none;
             display: inline-block;
+            margin: 1px;
+        }
+        .new2{
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            border:solid black 5px;
         }
         .navbar{
             margin:auto;
@@ -141,8 +149,24 @@
             transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
         }
 
+        .print-button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-left:320px;
+        }
+
+        @page {
+            margin:10px;
+        }
+
     </style>
 <body>
+    <br />
+    <input type="button" class ="print-button" value="Print PDF" onclick="window.open('<?php echo site_url('nadzir/htmlToPDF')?>','blank')"/>
+    <br />
     <center><table>
         <thead>
             <tr>
@@ -168,33 +192,21 @@
                     <td><?= $row['status']; ?></td>
                     <td>
                         <a href=<?= base_url("nadzir/edit/{$row['NadzirWakaf']}"); ?> class ="new">
-                            Edit Manual
+                            Edit 
                         </a>
                         <a href=<?= base_url("nadzir/delete/{$row['NadzirWakaf']}"); ?> class ="new">
-                            Delete Data
+                            Delete 
                         </a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <a href=<?= base_url("nadzir/add_new"); ?> class="new">
+    <a href=<?= base_url("nadzir/add_new"); ?> class="new2">
         Entry Data </a><br><br>
     </a>
-    <a href=<?= base_url("homepage"); ?> class="new">
-        Menu Admin </a><br><br>
-    </a>
-    <a href=logout class="new">
-        Logout </a><br><br>
-    </a>
-    <a href=<?= base_url("tanah/polygonsumedang"); ?> class="new">
-        Maps </a><br><br>
-    </a>
-    <a href=<?= base_url("tanah/index"); ?> class="new">
-        Tanah </a><br><br>
-    </a>
-    <a href=<?= base_url("kecamatan/index"); ?>  class="new">
-        Kecamatan </a><br><br>
+    <a href=<?= base_url("PolygonKecamatan/analisisLuas"); ?> class="new2">
+        Pemetaan Tanah Wakaf </a><br><br>
     </a>
 </body>
 
